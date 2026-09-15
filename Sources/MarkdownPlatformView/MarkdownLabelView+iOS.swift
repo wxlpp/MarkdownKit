@@ -278,6 +278,15 @@ public final class MarkdownLabelView: UIView, RenderSessionSink, RenderSessionRe
         true
     }
 
+    override public func resignFirstResponder() -> Bool {
+        let resigned = super.resignFirstResponder()
+        if resigned {
+            // Notify UITextInteraction as well as clearing the rendered highlight.
+            self.selectedTextRange = nil
+        }
+        return resigned
+    }
+
     /// Return an empty view so the software keyboard never appears for this read-only view.
     override public var inputView: UIView? {
         UIView(frame: .zero)
